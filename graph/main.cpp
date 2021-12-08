@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 
+//comment
+
 void readFile(Graph& graph) {
     std::ifstream file("../10.05.2021.13.04EDGELIST.csv");
     std::string line;
@@ -22,9 +24,49 @@ void readFile(Graph& graph) {
     }
 }
 
+
+
 int main() {
     Graph streamers;
     readFile(streamers);
-    std::cout << streamers.graph["GUANYAR"]["Llobeti4"] << std::endl; //Test
+    bool running = true;
+    while(running){
+        std::cout << "Welcome to the Twitch.tv shortest path visualizer!" << std::endl;
+        std::cout << "--------------------------------------------------" << std::endl;
+        std::cout << "This application allows you to enter the name of two streamers\nand find the shortest path of shared chatters between them" << std::endl;
+        std::cout << "Menu options: " << std::endl;
+        std::cout << "1. Djikstra's Algorithm" << std::endl;
+        std::cout << "2. Bellman-Ford Algorithm" << std::endl;
+        std::cout << "3. Quit application" << std::endl;
+        int choice;
+        std::cin >> choice;
+        std::string sourceStreamer;
+        std::string targetStreamer;
+        switch (choice){
+        case 1:
+            std::cout << "Please enter the name of the first streamer you'd like as the source for the search" << std::endl;
+            std::cin >> sourceStreamer;
+            std::cout << "Please enter the name of the second streamer youd like as the target for the search" << std::endl;
+            std::cin >> targetStreamer;
+            //code for djikstras algorithm
+            break;
+        case 2:
+            std::cout << "Please enter the name of the first streamer you'd like as the source for the search" << std::endl;
+            std::cin >> sourceStreamer;
+            std::cout << "Please enter the name of the second streamer youd like as the target for the search" << std::endl;
+            std::cin >> targetStreamer;
+            //code for bellman-ford algo
+            break;
+        case 3:
+            std::cout << "Thanks for using the Twitch.tv shortest path visualizer!" << std::endl;
+            running = false;
+            break;
+        default:
+            std::cout << "Invalid entry! Please enter a valid menu option between 1-3" << std::endl;
+            break;
+        }
+    }
+
+
     return 0;
 }
