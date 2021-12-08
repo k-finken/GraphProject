@@ -10,4 +10,5 @@ struct Graph {
     int getWeight(std::string from, std::string to);
     std::vector<std::string> getAdjacent(std::string name);
     std::vector<std::pair<std::string, int>> djikstra(std::string from, std::string to);
+    std::vector<std::pair<std::string, int>> bellmanFord(std::string from, std::string to);
 };
