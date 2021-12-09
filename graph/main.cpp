@@ -72,11 +72,15 @@ int main() {
         }
     }
 
+    
     // Debugging code
     std::cout << "Printing path:" << std::endl;
+    int cost = 0;
     for (int i = 0; i < path.size(); i++) {
         std::cout << path.at(i).first << std::endl;
+        cost += path[i].second;
     }
+    std::cout <<"\nTotal Cost: " << cost << std::endl;
     std::cout << "---------------------" << std::endl;
 
     return 0;
