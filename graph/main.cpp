@@ -58,7 +58,7 @@ int main() {
             std::cin >> sourceStreamer;
             std::cout << "Please enter the name of the second streamer youd like as the target for the search" << std::endl;
             std::cin >> targetStreamer;
-            //code for bellman-ford algo
+            path = streamers.dijkstra(sourceStreamer, targetStreamer);
             break;
         case 3:
             std::cout << "Thanks for using the Twitch.tv shortest path visualizer!" << std::endl;
@@ -70,6 +70,7 @@ int main() {
             std::cin.ignore(10000, '\n');
             break;
         }
+        break;
     }
 
     
