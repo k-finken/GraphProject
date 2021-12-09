@@ -24,8 +24,21 @@ std::vector<std::string> Graph::getAdjacent(std::string name) {
     return adjacent;
 }
 
-std::vector<std::pair<std::string, int>> Graph::djikstra(std::string from, std::string to) {
+std::vector<std::pair<std::string, int>> Graph::dijkstra(std::string from, std::string to) {
     std::vector<std::pair<std::string, int>> path;
+    std::map<std::string, std::pair<int, std::string>> distances; // Stores the target vertex first, and then stores a pair containing the total distance and the preceding node to achieve that distance.
+    std::set<std::string> visited; // Set containing all completed/visited vertices
+    std::queue<std::string> vertices; // Queue of vertices to visit
+    
+    distances[from] = std::make_pair(0, from);
+    //int size = this->graph.size(); // Number of vertices
+
+    for (auto iter = this->graph.begin(); iter != this->graph.end(); ++iter) {
+        if (iter->first != from) { // If the vertex name != the starting vertex
+            distances[iter->first] = std::make_pair(2147483647, "");
+        }
+
+    }
 
     return path;
 }
