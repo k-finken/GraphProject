@@ -24,6 +24,15 @@ std::vector<std::string> Graph::getAdjacent(std::string name) {
     return adjacent;
 }
 
+std::vector<std::pair<std::string, int>> Graph::djikstra(std::string from, std::string to) {
+    std::vector<std::pair<std::string, int>> path;
 
+    return path;
+}
 
+std::vector<std::pair<std::string, int>> Graph::bellmanFord(std::string from, std::string to) {
+    std::vector<std::pair<std::string, int>> path;
+
+    return path;
+}
 
