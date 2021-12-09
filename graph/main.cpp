@@ -38,7 +38,7 @@ int main() {
         std::cout << "--------------------------------------------------" << std::endl;
         std::cout << "This application allows you to enter the name of two streamers\nand find the shortest path of shared chatters between them" << std::endl;
         std::cout << "Menu options: " << std::endl;
-        std::cout << "1. Djikstra's Algorithm" << std::endl;
+        std::cout << "1. Dijkstra's Algorithm" << std::endl;
         std::cout << "2. Bellman-Ford Algorithm" << std::endl;
         std::cout << "3. Quit application" << std::endl;
         int choice;
