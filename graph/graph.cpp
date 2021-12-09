@@ -1,7 +1,10 @@
 #include "graph.h"
 
 void Graph::insertEdge(std::string from, std::string to, int weight) {
-    graph[from][to] = weight;
+    if (!graph[from].count(to)) {
+        graph[from][to] = weight;
+        count++;
+    }
     if (!graph.count(to)) { //If adjacency list doesn't have To vertex, add it in
         std::map<std::string, int> list;
         graph[to] = list;
