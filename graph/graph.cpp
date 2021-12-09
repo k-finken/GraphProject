@@ -1,13 +1,10 @@
 #include "graph.h"
 
 void Graph::insertEdge(std::string from, std::string to, int weight) {
-    if (!graph[from].count(to)) {
+    if (!graph[from].count(to)) { //Bidirectional weighted graph
         graph[from][to] = weight;
+        graph[to][from] = weight;
         count++;
-    }
-    if (!graph.count(to)) { //If adjacency list doesn't have To vertex, add it in
-        std::map<std::string, int> list;
-        graph[to] = list;
     }
 }
 
@@ -58,7 +55,7 @@ std::vector<std::pair<std::string, int>> Graph::dijkstra(std::string from, std::
 
     // Main Dijkstra's execution
     while (vertices.size() != 0) {
-        std::cout << vertices.size() << std::endl;
+        //std::cout << vertices.size() << std::endl; //Remove if you get std::bad_alloc error
         // Select next vertex to visit by finding the vertex with the shortest distance to it
         double minimumDist = std::numeric_limits<double>::infinity();
         std::string vertex;
