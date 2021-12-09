@@ -5,8 +5,8 @@
 
 //comment
 
-void readFile(Graph& graph) {
-    std::ifstream file("../10.05.2021.13.04EDGELIST.csv");
+void readFile(Graph& graph, std::string name) {
+    std::ifstream file("../" + name + ".csv");
     std::string line;
     std::getline(file, line); //Header info
     while (std::getline(file, line)) {
@@ -28,7 +28,9 @@ void readFile(Graph& graph) {
 
 int main() {
     Graph streamers;
-    readFile(streamers);
+    readFile(streamers, "10.05.2021.13.04EDGELIST");
+    readFile(streamers, "07.02.2021.02.40.42EDGELIST");
+    //std::cout << streamers.count << std::endl; //Number of edges
     bool running = true;
     while(running){
         std::cout << "Welcome to the Twitch.tv shortest path visualizer!" << std::endl;
