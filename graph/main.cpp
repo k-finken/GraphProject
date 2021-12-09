@@ -31,8 +31,9 @@ int main() {
     readFile(streamers, "10.05.2021.13.04EDGELIST");
     readFile(streamers, "07.02.2021.02.40.42EDGELIST");
     //std::cout << streamers.count << std::endl; //Number of edges
+    std::vector<std::pair<std::string, int>> path; // Debugging code
     bool running = true;
-    while(running){
+    while (running) {
         std::cout << "Welcome to the Twitch.tv shortest path visualizer!" << std::endl;
         std::cout << "--------------------------------------------------" << std::endl;
         std::cout << "This application allows you to enter the name of two streamers\nand find the shortest path of shared chatters between them" << std::endl;
@@ -44,13 +45,13 @@ int main() {
         std::cin >> choice;
         std::string sourceStreamer;
         std::string targetStreamer;
-        switch (choice){
+        switch (choice) {
         case 1:
             std::cout << "Please enter the name of the first streamer you'd like as the source for the search" << std::endl;
             std::cin >> sourceStreamer;
             std::cout << "Please enter the name of the second streamer youd like as the target for the search" << std::endl;
             std::cin >> targetStreamer;
-            //code for djikstras algorithm
+            path = streamers.dijkstra(sourceStreamer, targetStreamer);
             break;
         case 2:
             std::cout << "Please enter the name of the first streamer you'd like as the source for the search" << std::endl;
@@ -71,6 +72,12 @@ int main() {
         }
     }
 
+    // Debugging code
+    std::cout << "Printing path:" << std::endl;
+    for (int i = 0; i < path.size(); i++) {
+        std::cout << path.at(i).first << std::endl;
+    }
+    std::cout << "---------------------" << std::endl;
 
     return 0;
 }
