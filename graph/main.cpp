@@ -65,6 +65,8 @@ int main() {
             break;
         default:
             std::cout << "Invalid entry! Please enter a valid menu option between 1-3" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
             break;
         }
     }
