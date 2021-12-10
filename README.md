@@ -1,7 +1,5 @@
 # GraphProject
 
-#this is the repository for the final data structures project
-
 Instructions for compilation and use:
 1. Open a terminal in the base folder of this repository after cloning
 2. Run 'g++ -g graph/main.cpp graph/graph.cpp -o graph/main.exe' (or other compiler of choice, but we wrote and tested everything with g++)
