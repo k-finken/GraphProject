@@ -20,8 +20,20 @@ void readFile(Graph& graph, std::string name) {
         //Converting to int weight
         weight = std::stoi(weightStr);
         //Inserting into graph
-        graph.insertEdge(from, to, weight);
+        graph.insertEdgeMinimized(from, to, weight);
     }
+}
+
+void output(Graph& graph, std::vector<std::pair<std::string, int>> path) {
+    // Output
+    std::cout << "Printing path:" << std::endl;
+    int cost = 0;
+    for (int i = 0; i < path.size(); i++) {
+        std::cout << path.at(i).first << std::endl;
+        cost += path[i].second;
+    }
+    std::cout <<"\nTotal Cost: " << cost << std::endl;
+    std::cout << "---------------------" << std::endl;
 }
 
 
@@ -52,13 +64,15 @@ int main() {
             std::cout << "Please enter the name of the second streamer youd like as the target for the search" << std::endl;
             std::cin >> targetStreamer;
             path = streamers.dijkstra(sourceStreamer, targetStreamer);
+            output(streamers, path);
             break;
         case 2:
             std::cout << "Please enter the name of the first streamer you'd like as the source for the search" << std::endl;
             std::cin >> sourceStreamer;
             std::cout << "Please enter the name of the second streamer youd like as the target for the search" << std::endl;
             std::cin >> targetStreamer;
-            path = streamers.dijkstra(sourceStreamer, targetStreamer);
+            path = streamers.bellmanFord(sourceStreamer, targetStreamer);
+            output(streamers, path);
             break;
         case 3:
             std::cout << "Thanks for using the Twitch.tv shortest path visualizer!" << std::endl;
@@ -70,19 +84,6 @@ int main() {
             std::cin.ignore(10000, '\n');
             break;
         }
-        break;
     }
-
-    
-    // Debugging code
-    std::cout << "Printing path:" << std::endl;
-    int cost = 0;
-    for (int i = 0; i < path.size(); i++) {
-        std::cout << path.at(i).first << std::endl;
-        cost += path[i].second;
-    }
-    std::cout <<"\nTotal Cost: " << cost << std::endl;
-    std::cout << "---------------------" << std::endl;
-
     return 0;
 }

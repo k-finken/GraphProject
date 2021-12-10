@@ -10,6 +10,16 @@ void Graph::insertEdge(std::string from, std::string to, int weight) {
     }
 }
 
+void Graph::insertEdgeMinimized(std::string from, std::string to, int weight) {
+    if (graph[from].size() < 3) {
+        graph[from][to] = weight;
+        graph[to][from] = weight;
+        invertedGraph[from][to] = 1.0 / weight;
+        invertedGraph[to][from] = 1.0 / weight;
+        count++;
+    }
+}
+
 bool Graph::isEdge(std::string from, std::string to) {
     return graph[from].count(to);
 }
@@ -107,40 +117,43 @@ std::vector<std::pair<std::string, int>> Graph::dijkstra(std::string from, std::
 }
 
 std::vector<std::pair<std::string, int>> Graph::bellmanFord(std::string from, std::string to) {
-    int vertices = graph.size();
-    std::map<std::string, int> distances; //Distance from source vertex to all vertices
+    int vertices = invertedGraph.size();
+    std::map<std::string, double> distances; //Distance from source vertex to all vertices
     std::map<std::string, std::string> previous; //Predecessor vertex in path
     distances[from] = 0; //Setting source vertex distance to 0
-    previous[from] = from;
+    previous[from] = "";
     std::vector<std::pair<std::string, int>> path;
 
-    for (auto iter = graph.begin(); iter != graph.end(); ++iter) {
+    for (auto iter = invertedGraph.begin(); iter != invertedGraph.end(); ++iter) {
         if (iter->first != from) { // If the vertex name != the starting vertex
             distances[iter->first] = INT_MAX;
         }
     }
+
+    //Bellman Ford Algorithm
     for (int i = 0; i < vertices - 1; i++) { //Do the below operations |V| - 1 times
-        for (auto iter = graph.begin(); iter != graph.end(); ++iter) { //For every edge (U,V)
+        for (auto iter = invertedGraph.begin(); iter != invertedGraph.end(); ++iter) { //For every edge (U,V)
             for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); ++iter2) {
-                unsigned int tempDistance = distances[iter2->first] + getWeight(iter->first, iter2->first); //If distance(V) > distance(U) + weight(U,V), apply relaxaion
-                if (tempDistance < distances[iter->first]) {
-                    distances[iter->first] = tempDistance;
-                    previous[iter->first] = iter2->first;
+                double tempDistance = distances[iter->first] + invertedGraph[iter->first][iter2->first]; //If distance(V) > distance(U) + weight(U,V), apply relaxaion
+                if (tempDistance < distances[iter2->first]) {
+                    distances[iter2->first] = tempDistance;
+                    previous[iter2->first] = iter->first;
                 }
             }
         }
     }
 
-    for (auto iter = graph.begin(); iter != graph.end(); ++iter) { //Iterate through every edge
-        for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); ++iter2) {
-            if ((distances[iter->first] + getWeight(iter->first, iter2->first)) < distances[iter2->first]) //If distance(U) + weight(U,V) < distance(V), there is a negative edge
-                std::cout << "Negative Edge Cycle Exists";
-        }
-    }
+    //Testing for negative weights. No negative weights in data set, so code is unnecessary
+    // for (auto iter = graph.begin(); iter != graph.end(); ++iter) { //Iterate through every edge
+    //     for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); ++iter2) {
+    //         if ((distances[iter2->first] + getWeight(iter->first, iter2->first)) < distances[iter->first]) //If distance(U) + weight(U,V) < distance(V), there is a negative edge
+    //             std::cout << "Negative Edge Cycle Exists" << std::endl;
+    //     }
+    // }
 
     //Find the path from source vertex to target vertex
     std::string current = to;
-    while (current != from) {
+    while (current != "") {
         path.push_back(std::make_pair(current,getWeight(current,previous[current])));
         current = previous[current];
     }
