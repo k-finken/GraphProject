@@ -4,6 +4,8 @@ void Graph::insertEdge(std::string from, std::string to, int weight) {
     if (!graph[from].count(to)) { //Bidirectional weighted graph
         graph[from][to] = weight;
         graph[to][from] = weight;
+        invertedGraph[from][to] = 1.0 / weight;
+        invertedGraph[to][from] = 1.0 / weight;
         count++;
     }
 }
@@ -24,19 +26,8 @@ std::vector<std::string> Graph::getAdjacent(std::string name) {
     return adjacent;
 }
 
-// Change all weights from the original graph to be 1/weight so that a high number of chatters counts as the shorter path, and low chatters count as longer paths
+// Use invertedGraph so that a high number of chatters counts as the shorter path, and low chatters count as longer paths
 std::vector<std::pair<std::string, int>> Graph::dijkstra(std::string from, std::string to) {
-    // Generate inverted version of the graph with new weight = 1 /original weight so that a path between two streamers is "shorter" if they have more shared viewers
-    // *** Optimization: May want to store an inverted copy of the graph in the Graph object itself, so this doesn't have to be recalculated for every search
-    std::map<std::string, std::map<std::string, double>> invertedGraph;
-    for (auto iter = this->graph.begin(); iter != this->graph.end(); ++iter) {
-        std::map<std::string, double> temp;
-        for (auto iter2 = iter->second.begin(); iter2 != iter->second.end(); ++iter2) {
-            temp[iter2->first] = 1 / iter2->second;
-        }
-        invertedGraph[iter->first] = temp;
-    }
-
     std::vector<std::pair<std::string, int>> path; // Will store the final path between 'from' and 'to', with each int representing the weight required to reach the current node from the previous node (first element weight is 0)
     std::map<std::string, std::pair<double, std::string>> distances; // Stores the target vertex first, and then stores a pair containing the total distance and the preceding node to achieve that distance.
     std::set<std::string> visited; // Set containing all completed/visited vertices
@@ -46,7 +37,7 @@ std::vector<std::pair<std::string, int>> Graph::dijkstra(std::string from, std::
     vertices.insert(from);
 
     // Add all other vertices (everything excluding 'from') with distance = infinity (using numeric_limits<double>::infinity()) to the set of vertices to be checked
-    for (auto iter = invertedGraph.begin(); iter != invertedGraph.end(); ++iter) {
+    for (auto iter = this->invertedGraph.begin(); iter != this->invertedGraph.end(); ++iter) {
         if (iter->first != from) { // If the vertex name != the starting vertex
             distances[iter->first] = std::make_pair(std::numeric_limits<double>::infinity(), "");
             vertices.insert(iter->first);
@@ -71,7 +62,7 @@ std::vector<std::pair<std::string, int>> Graph::dijkstra(std::string from, std::
         }
 
         // Iterate over all adjacents to the current vertex
-        for (auto iter = invertedGraph[vertex].begin(); iter != invertedGraph[vertex].end(); ++iter) {
+        for (auto iter = this->invertedGraph[vertex].begin(); iter != this->invertedGraph[vertex].end(); ++iter) {
             if (visited.count(iter->first) != 0) { // If the current adjacent has already been visited/completed, skip to the next iteration
                 continue;
             }
