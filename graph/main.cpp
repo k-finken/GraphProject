@@ -64,7 +64,7 @@ void output(Graph& graph, std::vector<std::pair<std::string, int>> path) {
 
 
 int main() {
-    Graph streamers; //Graph with ~80k vertices and ~200k edges
+    Graph streamers; //Graph with ~2.8k vertices and ~200k edges
     Graph streamers2; //Graph with ~2k vertices and ~5k edges
     readFile(streamers, "10.05.2021.13.04EDGELIST");
     readFile(streamers, "07.02.2021.02.40.42EDGELIST");
@@ -73,6 +73,9 @@ int main() {
     readFileMinimized(streamers2, "10.05.2021.13.04EDGELIST");
     readFileMinimized(streamers2, "07.02.2021.02.40.42EDGELIST");
     //std::cout << streamers.count << std::endl; //Number of edges
+    //std::cout << streamers.graph.size() << std::endl; //Number of vertices
+    //std::cout << streamers2.count << std::endl; //Number of edges
+    //std::cout << streamers2.graph.size() << std::endl; //Number of vertices
     std::vector<std::pair<std::string, int>> path; // Debugging code
     bool running = true;
     std::cout << "Welcome to the Twitch.tv shortest path visualizer!" << std::endl;
