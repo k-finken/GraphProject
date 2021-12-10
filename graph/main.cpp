@@ -80,7 +80,7 @@ int main() {
     std::cout << "This application allows you to enter the name of two streamers\nand find the shortest path of shared chatters between them" << std::endl;
     while (running) {
         std::cout << "Choose which data set to use:" << std::endl;
-        std::cout << "1. Full data set: ~2.5k vertices, ~250k edges" << std::endl;
+        std::cout << "1. Full data set: ~2.8k vertices, ~250k edges" << std::endl;
         std::cout << "2. Small data set: ~2.5k vertices, ~5k edges" << std::endl;
         int choice;
         std::cin >> choice;
