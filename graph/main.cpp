@@ -27,6 +27,9 @@ void readFile(Graph& graph, std::string name) {
 void output(Graph& graph, std::vector<std::pair<std::string, int>> path) {
     // Output
     std::cout << "Printing path:" << std::endl;
+    if (path.size() == 0) {
+        std::cout << "At least one of the streamers entered does not exist, or there are no shared chatters between them" << std::endl;
+    }
     int cost = 0;
     for (int i = 0; i < path.size(); i++) {
         std::cout << path.at(i).first << std::endl;
