@@ -20,6 +20,25 @@ void readFile(Graph& graph, std::string name) {
         //Converting to int weight
         weight = std::stoi(weightStr);
         //Inserting into graph
+        graph.insertEdge(from, to, weight);
+    }
+}
+
+void readFileMinimized(Graph& graph, std::string name) {
+    std::ifstream file("../" + name + ".csv");
+    std::string line;
+    std::getline(file, line); //Header info
+    while (std::getline(file, line)) {
+        std::istringstream stream(line);
+        std::string from, to, weightStr;
+        int weight;
+
+        std::getline(stream, from, ',');
+        std::getline(stream, to, ',');
+        std::getline(stream, weightStr);
+        //Converting to int weight
+        weight = std::stoi(weightStr);
+        //Inserting into graph
         graph.insertEdgeMinimized(from, to, weight);
     }
 }
@@ -45,9 +64,13 @@ void output(Graph& graph, std::vector<std::pair<std::string, int>> path) {
 
 
 int main() {
-    Graph streamers;
+    Graph streamers; //Graph with ~80k vertices and ~200k edges
+    //Graph streamers2; //Graph with ~2k vertices and ~5k edges
     readFile(streamers, "10.05.2021.13.04EDGELIST");
     readFile(streamers, "07.02.2021.02.40.42EDGELIST");
+    //Uncomment to test smaller data set
+    //readFileMinimized(streamers2, "10.05.2021.13.04EDGELIST");
+    //readFileMinimized(streamers2, "07.02.2021.02.40.42EDGELIST");
     //std::cout << streamers.count << std::endl; //Number of edges
     std::vector<std::pair<std::string, int>> path; // Debugging code
     bool running = true;
@@ -70,6 +93,8 @@ int main() {
             std::cout << "Please enter the name of the second streamer youd like as the target for the search" << std::endl;
             std::cin >> targetStreamer;
             path = streamers.dijkstra(sourceStreamer, targetStreamer);
+            //path = streamers2.bellmanFord(sourceStreamer, targetStreamer);
+            //output(streamers2, path);
             output(streamers, path);
             break;
         case 2:
@@ -78,6 +103,8 @@ int main() {
             std::cout << "Please enter the name of the second streamer youd like as the target for the search" << std::endl;
             std::cin >> targetStreamer;
             path = streamers.bellmanFord(sourceStreamer, targetStreamer);
+            //path = streamers2.bellmanFord(sourceStreamer, targetStreamer);
+            //output(streamers2, path);
             output(streamers, path);
             break;
         case 3:
