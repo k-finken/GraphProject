@@ -53,6 +53,9 @@ std::vector<std::pair<std::string, int>> Graph::dijkstra(std::string from, std::
         }
     }
 
+    if (this->graph.count(from) == 0 || this->graph.count(to) == 0) { // If either vertex doesn't exist in the graph, return now with an empty path
+        return path;
+    }
     // Main Dijkstra's execution
     while (vertices.size() != 0) {
         //std::cout << vertices.size() << std::endl; //Remove if you get std::bad_alloc error
@@ -67,8 +70,6 @@ std::vector<std::pair<std::string, int>> Graph::dijkstra(std::string from, std::
             }
         }
 
-        
-
         // Iterate over all adjacents to the current vertex
         for (auto iter = invertedGraph[vertex].begin(); iter != invertedGraph[vertex].end(); ++iter) {
             if (visited.count(iter->first) != 0) { // If the current adjacent has already been visited/completed, skip to the next iteration
@@ -81,7 +82,6 @@ std::vector<std::pair<std::string, int>> Graph::dijkstra(std::string from, std::
                 distances[iter->first].second = vertex;
             }
         }
-
         
         vertices.erase(vertex); // Remove the current vertex from the list of vertices to be visited, since it has just been visited
         visited.insert(vertex); // Add the current vertex to the set of visited vertices
